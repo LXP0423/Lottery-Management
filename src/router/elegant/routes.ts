@@ -74,5 +74,44 @@ export const generatedRoutes: GeneratedRoute[] = [
       constant: true,
       hideInMenu: true
     }
+  },
+  {
+    name: 'user-center',
+    path: '/user-center',
+    component: 'layout.base',
+    meta: {
+      title: 'user-center',
+      i18nKey: 'route.user-center',
+      icon: 'carbon:cloud-service-management',
+      order: 9,
+      roles: ['ROLE_USER']
+    },
+    children: [
+      {
+        name: 'user-center_buy-detail',
+        path: '/user-center/buy-detail/:id',
+        component: 'view.user-center_buy-detail',
+        props: true,
+        meta: {
+          title: 'user-center_buy-detail',
+          i18nKey: 'route.user-center_buy-detail',
+          hideInMenu: true,
+          activeMenu: 'user-center_user-list',
+          roles: ['ROLE_USER']
+        }
+      },
+      {
+        name: 'user-center_user-list',
+        path: '/user-center/user-list',
+        component: 'view.user-center_user-list',
+        meta: {
+          title: 'user-center_user-list',
+          i18nKey: 'route.user-center_user-list',
+          icon: 'ic:round-manage-accounts',
+          order: 1,
+          roles: ['ROLE_USER']
+        }
+      }
+    ]
   }
 ];

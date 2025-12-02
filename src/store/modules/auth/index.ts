@@ -44,6 +44,14 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
 
     clearAuthStorage();
 
+    // 移除循环引用
+    // token.value = '';
+    // Object.assign(userInfo, {
+    //   userId: '',
+    //   userName: '',
+    //   roles: [],
+    //   buttons: []
+    // });
     authStore.$reset();
 
     if (!route.meta.constant) {
@@ -99,9 +107,27 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
   async function login(userName: string, password: string, redirect = true) {
     startLoading();
 
-    const { data: loginToken, error } = await fetchLogin(userName, password);
+    try {
+      const { data: loginToken, error } = await fetchLogin(userName, password);
 
-    if (!error) {
+      if (error || !loginToken) {
+        // 登录失败处理
+        endLoading();
+
+        // 抛出具体错误信息
+        const errorMsg = error?.message || '登录失败，请检查用户名和密码';
+        throw new Error(errorMsg);
+      }
+
+      // 检查 token 是否存在
+      if (!loginToken.token) {
+        endLoading();
+        // 显示错误消息
+        window.$message?.error('登录失败：未获取到有效的token');
+        resetStore();
+        throw new Error('登录失败：未获取到有效的token');
+      }
+
       const pass = await loginByToken(loginToken);
 
       if (pass) {
@@ -120,13 +146,129 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
           content: $t('page.login.common.welcomeBack', { userName: userInfo.userName }),
           duration: 4500
         });
+        console.log('✅ 登录成功，用户信息：', userInfo);
+      } else {
+        // 获取用户信息失败
+        window.$message?.error('获取用户信息失败');
+        resetStore();
+        throw new Error('获取用户信息失败');
       }
-    } else {
+    } catch (error) {
+      // 确保在出错时也结束 loading
+      endLoading();
       resetStore();
+      throw error; // 重新抛出错误，让调用方处理
     }
-
-    endLoading();
   }
+
+  // async function login(userName: string, password: string, redirect = true) {
+  //   startLoading();
+
+  //   const { data: loginToken, error } = await fetchLogin(userName, password);
+
+  //   if (!error && error !== null) {
+  //     const pass = await loginByToken(loginToken);
+
+  //     if (pass) {
+  //       // Check if the tab needs to be cleared
+  //       const isClear = checkTabClear();
+  //       let needRedirect = redirect;
+
+  //       if (isClear) {
+  //         // If the tab needs to be cleared,it means we don't need to redirect.
+  //         needRedirect = false;
+  //       }
+  //       await redirectFromLogin(needRedirect);
+
+  //       window.$notification?.success({
+  //         title: $t('page.login.common.loginSuccess'),
+  //         content: $t('page.login.common.welcomeBack', { userName: userInfo.userName }),
+  //         duration: 4500
+  //       });
+  //     }
+  //   } else {
+  //     resetStore();
+  //   }
+
+  //   endLoading();
+  // }
+
+  // async function loginByToken(loginToken: Api.Auth.LoginToken) {
+  //   // 添加空值检查
+  //   if (!loginToken || !loginToken.token) {
+  //     console.error('Invalid login token:', loginToken);
+  //     return false;
+  //   }
+
+  //   try {
+  //     // 1. stored in the localStorage, the later requests need it in headers
+  //     localStg.set('token', loginToken.token);
+  //     localStg.set('refreshToken', loginToken.refreshToken);
+
+  //     // 2. get user info
+  //     const pass = await getUser();
+
+  //     if (pass) {
+  //       token.value = loginToken.token;
+  //       return true;
+  //     }
+
+  //     return false;
+  //   } catch (error) {
+  //     console.error('Login by token failed:', error);
+  //     // 清理无效的 token
+  //     localStg.remove('token');
+  //     localStg.remove('refreshToken');
+  //     return false;
+  //   }
+  // }
+
+  // async function loginByToken(loginToken: Api.Auth.LoginToken) {
+  //   // 1. stored in the localStorage, the later requests need it in headers
+  //   localStg.set('token', loginToken.token);
+  //   localStg.set('refreshToken', loginToken.refreshToken);
+
+  //   // 2. get user info
+  //   const pass = await getUser();
+
+  //   if (pass) {
+  //     token.value = loginToken.token;
+
+  //     return true;
+  //   }
+
+  //   return false;
+  // }
+
+  // async function getUser() {
+  //   try {
+  //     const { data: info, error } = await fetchGetUserInfo();
+
+  //     if (error || !info) {
+  //       console.error('Get user info failed:', error);
+  //       return false;
+  //     }
+
+  //     // update store
+  //     Object.assign(userInfo, info);
+  //     return true;
+  //   } catch (error) {
+  //     console.error('Get user info error:', error);
+  //     return false;
+  //   }
+  // }
+
+  // async function initUser() {
+  //   const hasToken = getToken();
+
+  //   if (hasToken) {
+  //     const pass = await getUser();
+
+  //     if (!pass) {
+  //       resetStore();
+  //     }
+  //   }
+  // }
 
   async function loginByToken(loginToken: Api.Auth.LoginToken) {
     // 1. stored in the localStorage, the later requests need it in headers
@@ -134,7 +276,7 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
     localStg.set('refreshToken', loginToken.refreshToken);
 
     // 2. get user info
-    const pass = await getUser();
+    const pass = await getUserInfo();
 
     if (pass) {
       token.value = loginToken.token;
@@ -145,8 +287,9 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
     return false;
   }
 
-  async function getUser() {
+  async function getUserInfo() {
     const { data: info, error } = await fetchGetUserInfo();
+
     if (!error) {
       // update store
       Object.assign(userInfo, info);
@@ -157,11 +300,11 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
     return false;
   }
 
-  async function initUser() {
+  async function initUserInfo() {
     const hasToken = getToken();
 
     if (hasToken) {
-      const pass = await getUser();
+      const pass = await getUserInfo();
 
       if (!pass) {
         resetStore();
@@ -177,6 +320,6 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
     loginLoading,
     resetStore,
     login,
-    initUser
+    initUserInfo
   };
 });

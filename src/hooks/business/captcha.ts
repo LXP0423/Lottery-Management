@@ -1,6 +1,7 @@
 import { computed } from 'vue';
 import { useCountDown, useLoading } from '@sa/hooks';
 import { REG_PHONE } from '@/constants/reg';
+import { fetchSendCaptcha } from '@/service/api';
 import { $t } from '@/locales';
 
 export function useCaptcha() {
@@ -48,16 +49,21 @@ export function useCaptcha() {
 
     startLoading();
 
-    // request
-    await new Promise(resolve => {
-      setTimeout(resolve, 500);
-    });
+    try {
+      // 调用真实接口
+      const { error } = await fetchSendCaptcha(phone);
 
-    window.$message?.success?.($t('page.login.codeLogin.sendCodeSuccess'));
-
-    start();
-
-    endLoading();
+      if (!error) {
+        window.$message?.success?.($t('page.login.codeLogin.sendCodeSuccess'));
+        start(); // 开始倒计时
+      } else {
+        window.$message?.error?.(error.message || $t('page.login.codeLogin.sendCodeFailed'));
+      }
+    } catch {
+      window.$message?.error?.('网络错误，请重试');
+    } finally {
+      endLoading();
+    }
   }
 
   return {

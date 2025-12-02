@@ -1,7 +1,7 @@
 import { request } from '../request';
 
 /**
- * Login
+ * Login-by-username
  *
  * @param userName User name
  * @param password Password
@@ -14,6 +14,36 @@ export function fetchLogin(userName: string, password: string) {
       userName,
       password
     }
+  });
+}
+
+/**
+ * Login-by-code
+ *
+ * @param phone phone
+ * @param code code
+ */
+export function fetchLoginByCode(phone: string, code: string) {
+  return request<Api.Auth.LoginToken>({
+    url: '/users/loginByCode',
+    method: 'post',
+    data: {
+      phone,
+      code
+    }
+  });
+}
+
+/**
+ * Register
+ *
+ * @param data Register data
+ */
+export function fetchRegister(data: { Mobile?: string; username?: string; password: string; code?: string }) {
+  return request<Api.Auth.LoginToken>({
+    url: '/users/register',
+    method: 'post',
+    data
   });
 }
 
@@ -45,4 +75,17 @@ export function fetchRefreshToken(refreshToken: string) {
  */
 export function fetchCustomBackendError(code: string, msg: string) {
   return request({ url: '/auth/error', params: { code, msg } });
+}
+
+/**
+ * Send captcha
+ *
+ * @param phone Phone number
+ */
+export function fetchSendCaptcha(phone: string) {
+  return request({
+    url: '/auth/send-captcha',
+    method: 'post',
+    data: { phone }
+  });
 }

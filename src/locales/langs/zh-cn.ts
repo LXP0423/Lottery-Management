@@ -225,7 +225,11 @@ const local: App.I18n.Schema = {
     home: '首页',
     'user-center': '用户管理',
     'user-center_user-list': '用户列表',
-    'user-center_buy-detail': '购买详情'
+    'user-center_buy-detail': '购买详情',
+    'system-settings': '系统设置',
+    'system-settings_message-management': '消息管理',
+    'system-settings_message-management_template-management': '模板管理',
+    'system-settings_message-management_notification-configuration': '通知管理'
   },
   page: {
     login: {
@@ -259,10 +263,17 @@ const local: App.I18n.Schema = {
         getCode: '获取验证码',
         reGetCode: '{time}秒后重新获取',
         sendCodeSuccess: '验证码发送成功',
+        sendCodeFailed: '验证码发送失败，请重试',
         imageCodePlaceholder: '请输入图片验证码'
       },
       register: {
         title: '注册账号',
+        phoneRegister: '手机号注册',
+        usernameRegister: '用户名注册',
+        registering: '注册中...',
+        registerSuccess: '注册成功',
+        RegistraFailed: '注册失败，请重试',
+        haveAccount: '已有账号？去登录',
         agreement: '我已经仔细阅读并接受',
         protocol: '《用户协议》',
         policy: '《隐私权政策》'
@@ -302,6 +313,62 @@ const local: App.I18n.Schema = {
         desc5: 'Soybean 刚才把工作台页面随便写了一些，凑合能看了！'
       },
       creativity: '创意'
+    },
+    systemSettings: {
+      messageManagement: {
+        common: {
+          status: {
+            enable: '启用',
+            disable: '禁用'
+          }
+        },
+        templateManagement: {
+          title: '模板管理',
+          templateCode: '模板代码',
+          templateName: '模板名称',
+          templateType: '模板类型',
+          templateCategory: '模板分类',
+          titleTemplate: '模板标题',
+          contentTemplate: '模板内容',
+          templateDescription: '模板说明',
+          variablesDescription: '变量说明',
+          isActive: '是否启用',
+          isSystem: '是否系统模板',
+          priority: '优先级',
+          triggerEvent: '触发事件',
+          totalUsed: '总使用次数',
+          lastUsedTime: '最后使用时间',
+          createTime: '创建时间',
+          updateTime: '更新时间',
+          createdBy: '创建人',
+          updatedBy: '更新人',
+          form: {
+            templateCode: '请输入模板代码',
+            templateName: '请输入模板名称',
+            templateType: '请输入模板类型',
+            templateCategory: '请输入模板分类',
+            titleTemplate: '请输入模板标题',
+            contentTemplate: '请输入模板内容',
+            templateDescription: '请输入模板说明',
+            variablesDescription: '请输入变量说明',
+            isActive: '请选择是否启用',
+            isSystem: '请选择是否是系统模板',
+            priority: '请选择优先级',
+            triggerEvent: '请选择触发事件',
+            totalUsed: '请输入总使用次数',
+            lastUsedTime: '请输入最后使用时间',
+            createTime: '请输入创建时间',
+            updateTime: '请输入更新时间',
+            createdBy: '创建人',
+            updatedBy: '更新人'
+          },
+          addTemplate: '增加模板',
+          editTemplate: '编辑模板'
+        },
+        notificationConfiguration: {
+          title: 'Notification Configuration'
+        }
+      }
     },
     userCenter: {
       common: {

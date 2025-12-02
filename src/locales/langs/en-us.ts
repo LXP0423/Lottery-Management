@@ -228,7 +228,11 @@ const local: App.I18n.Schema = {
     home: 'Home',
     'user-center': 'User Center',
     'user-center_user-list': 'User List',
-    'user-center_buy-detail': 'Buy Detail'
+    'user-center_buy-detail': 'Buy Detail',
+    'system-settings': 'System Settings',
+    'system-settings_message-management': 'Message Management',
+    'system-settings_message-management_template-management': 'Template Management',
+    'system-settings_message-management_notification-configuration': 'Notification Configuration'
   },
   page: {
     login: {
@@ -262,10 +266,17 @@ const local: App.I18n.Schema = {
         getCode: 'Get verification code',
         reGetCode: 'Reacquire after {time}s',
         sendCodeSuccess: 'Verification code sent successfully',
+        sendCodeFailed: 'Failed to send verification code, please try again',
         imageCodePlaceholder: 'Please enter image verification code'
       },
       register: {
         title: 'Register',
+        phoneRegister: 'Phone Registration',
+        usernameRegister: 'Username Registration',
+        registering: 'Registering...',
+        registerSuccess: 'Register Success',
+        RegistraFailed: 'Registration failed, please try again',
+        haveAccount: 'Already have an account? Go to login',
         agreement: 'I have read and agree to',
         protocol: '《User Agreement》',
         policy: '《Privacy Policy》'
@@ -336,6 +347,62 @@ const local: App.I18n.Schema = {
         gender: {
           male: 'Male',
           female: 'Female'
+        }
+      }
+    },
+    systemSettings: {
+      messageManagement: {
+        common: {
+          status: {
+            enable: 'Enable',
+            disable: 'Disable'
+          }
+        },
+        templateManagement: {
+          title: 'Template Management',
+          templateCode: 'Template Code',
+          templateName: 'Template Name',
+          templateType: 'Template Type',
+          templateCategory: 'Template Category',
+          titleTemplate: 'Template Title',
+          contentTemplate: 'Template Content',
+          templateDescription: 'Template Description',
+          variablesDescription: 'Variables Description',
+          isActive: 'Is Active',
+          isSystem: 'Is System',
+          priority: 'Priority',
+          triggerEvent: 'Trigger Event',
+          totalUsed: 'Total Used',
+          lastUsedTime: 'last used time',
+          createTime: 'create time',
+          updateTime: 'update time',
+          createdBy: 'created by',
+          updatedBy: 'updated by',
+          form: {
+            templateCode: 'Please enter template code',
+            templateName: 'Please enter template name',
+            templateType: 'Please select template type',
+            templateCategory: 'Please select template category',
+            titleTemplate: 'Please enter title template',
+            contentTemplate: 'Please enter content template',
+            templateDescription: 'Please enter template description',
+            variablesDescription: 'Please enter variables description',
+            isActive: 'Please select is active',
+            isSystem: 'Please select is system',
+            priority: 'Please enter priority',
+            triggerEvent: 'Please enter trigger event',
+            totalUsed: 'Please enter total used',
+            lastUsedTime: 'Please enter last used time',
+            createTime: 'Please enter create time',
+            updateTime: 'Please enter update time',
+            createdBy: 'Please enter created by',
+            updatedBy: 'Please enter updated by'
+          },
+          addTemplate: 'Add Template',
+          editTemplate: 'Edit Template'
+        },
+        notificationConfiguration: {
+          title: 'Notification Configuration'
         }
       }
     }

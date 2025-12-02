@@ -38,12 +38,13 @@ declare namespace Api {
 
     /** user */
     type UserList = Common.CommonRecord<{
+      /** user nick name */
+      nickName: string;
       /** user name */
       userName: string;
       /** user gender */
       userGender: UserListGender | null;
-      /** user nick name */
-      nickName: string;
+
       /** user phone */
       userPhone: string;
       /** user email */

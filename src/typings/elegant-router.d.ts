@@ -23,6 +23,10 @@ declare module "@elegant-router/types" {
     "home": "/home";
     "iframe-page": "/iframe-page/:url";
     "login": "/login/:module(pwd-login|code-login|register|reset-pwd|bind-wechat)?";
+    "system-settings": "/system-settings";
+    "system-settings_message-management": "/system-settings/message-management";
+    "system-settings_message-management_notification-configuration": "/system-settings/message-management/notification-configuration";
+    "system-settings_message-management_template-management": "/system-settings/message-management/template-management";
     "user-center": "/user-center";
     "user-center_buy-detail": "/user-center/buy-detail/:id";
     "user-center_user-list": "/user-center/user-list";
@@ -63,6 +67,7 @@ declare module "@elegant-router/types" {
     | "home"
     | "iframe-page"
     | "login"
+    | "system-settings"
     | "user-center"
   >;
 
@@ -86,6 +91,8 @@ declare module "@elegant-router/types" {
     | "iframe-page"
     | "login"
     | "home"
+    | "system-settings_message-management_notification-configuration"
+    | "system-settings_message-management_template-management"
     | "user-center_buy-detail"
     | "user-center_user-list"
   >;

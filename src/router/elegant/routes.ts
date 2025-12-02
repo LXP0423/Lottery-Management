@@ -46,7 +46,7 @@ export const generatedRoutes: GeneratedRoute[] = [
     meta: {
       title: 'home',
       i18nKey: 'route.home',
-      icon: 'mdi:monitor-dashboard',
+      icon: 'streamline-ultimate:house-4-bold',
       order: 1
     }
   },
@@ -76,15 +76,59 @@ export const generatedRoutes: GeneratedRoute[] = [
     }
   },
   {
+    name: 'system-settings',
+    path: '/system-settings',
+    component: 'layout.base',
+    meta: {
+      title: 'system-settings',
+      i18nKey: 'route.system-settings',
+      icon: 'ic:round-settings',
+      roles: ['ROLE_SUPER_ADMIN'],
+      order: 10
+    },
+    children: [
+      {
+        name: 'system-settings_message-management',
+        path: '/system-settings/message-management',
+        meta: {
+          title: 'system-settings_message-management',
+          i18nKey: 'route.system-settings_message-management',
+          icon: 'mynaui:message-dots-solid'
+        },
+        children: [
+          {
+            name: 'system-settings_message-management_notification-configuration',
+            path: '/system-settings/message-management/notification-configuration',
+            component: 'view.system-settings_message-management_notification-configuration',
+            meta: {
+              title: 'system-settings_message-management_notification-configuration',
+              i18nKey: 'route.system-settings_message-management_notification-configuration'
+            }
+          },
+          {
+            name: 'system-settings_message-management_template-management',
+            path: '/system-settings/message-management/template-management',
+            component: 'view.system-settings_message-management_template-management',
+            meta: {
+              title: 'system-settings_message-management_template-management',
+              i18nKey: 'route.system-settings_message-management_template-management',
+              icon: 'material-symbols:android-messages'
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
     name: 'user-center',
     path: '/user-center',
     component: 'layout.base',
     meta: {
       title: 'user-center',
       i18nKey: 'route.user-center',
-      icon: 'carbon:cloud-service-management',
+      icon: 'ix:user-management-settings-filled',
       order: 9,
-      roles: ['ROLE_USER']
+      roles: ['ROLE_USER', 'ROLE_SUPER_ADMIN']
     },
     children: [
       {
@@ -97,7 +141,7 @@ export const generatedRoutes: GeneratedRoute[] = [
           i18nKey: 'route.user-center_buy-detail',
           hideInMenu: true,
           activeMenu: 'user-center_user-list',
-          roles: ['ROLE_USER']
+          roles: ['ROLE_USER', 'ROLE_SUPER_ADMIN']
         }
       },
       {
@@ -107,9 +151,9 @@ export const generatedRoutes: GeneratedRoute[] = [
         meta: {
           title: 'user-center_user-list',
           i18nKey: 'route.user-center_user-list',
-          icon: 'ic:round-manage-accounts',
+          icon: 'mdi:text-account',
           order: 1,
-          roles: ['ROLE_USER']
+          roles: ['ROLE_USER', 'ROLE_SUPER_ADMIN']
         }
       }
     ]

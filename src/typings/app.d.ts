@@ -503,10 +503,17 @@ declare namespace App {
             getCode: string;
             reGetCode: string;
             sendCodeSuccess: string;
+            sendCodeFailed: string;
             imageCodePlaceholder: string;
           };
           register: {
             title: string;
+            phoneRegister: string;
+            usernameRegister: string;
+            registering: string;
+            registerSuccess: string;
+            RegistraFailed: string;
+            haveAccount: string;
             agreement: string;
             protocol: string;
             policy: string;
@@ -576,6 +583,62 @@ declare namespace App {
             gender: {
               male: string;
               female: string;
+            };
+          };
+        };
+        systemSettings: {
+          messageManagement: {
+            common: {
+              status: {
+                enable: string;
+                disable: string;
+              };
+            };
+            templateManagement: {
+              title: string;
+              templateCode: string;
+              templateName: string;
+              templateType: string;
+              templateCategory: string;
+              titleTemplate: string;
+              contentTemplate: string;
+              templateDescription: string;
+              variablesDescription: string;
+              isActive: string;
+              isSystem: string;
+              priority: string;
+              triggerEvent: string;
+              totalUsed: string;
+              lastUsedTime: string;
+              createTime: string;
+              updateTime: string;
+              createdBy: string;
+              updatedBy: string;
+              form: {
+                templateCode: string;
+                templateName: string;
+                templateType: string;
+                templateCategory: string;
+                titleTemplate: string;
+                contentTemplate: string;
+                templateDescription: string;
+                variablesDescription: string;
+                isActive: string;
+                isSystem: string;
+                priority: string;
+                triggerEvent: string;
+                totalUsed: string;
+                lastUsedTime: string;
+                createTime: string;
+                updateTime: string;
+                createdBy: string;
+                updatedBy: string;
+              };
+              addTemplate: string;
+              editTemplate: string;
+            };
+            notificationConfiguration: {
+              title: string;
             };
           };
         };

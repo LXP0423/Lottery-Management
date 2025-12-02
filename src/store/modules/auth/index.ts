@@ -146,7 +146,6 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
           content: $t('page.login.common.welcomeBack', { userName: userInfo.userName }),
           duration: 4500
         });
-        console.log('✅ 登录成功，用户信息：', userInfo);
       } else {
         // 获取用户信息失败
         window.$message?.error('获取用户信息失败');

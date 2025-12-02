@@ -6,8 +6,8 @@ import { fetchGetTemplateList } from '@/service/api/system-settings';
 import { useAppStore } from '@/store/modules/app';
 import { defaultTransform, useNaivePaginatedTable, useTableOperate } from '@/hooks/common/table';
 import { $t } from '@/locales';
-import templateOperateDrawer from './modules/template-operate-drawer.vue';
-import templateSearch from './modules/template-search.vue';
+import TemplateOperateDrawer from './modules/template-operate-drawer.vue';
+import TemplateSearch from './modules/template-search.vue';
 
 const appStore = useAppStore();
 

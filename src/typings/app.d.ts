@@ -530,6 +530,9 @@ declare namespace App {
           greeting: string;
           weatherDesc: string;
           projectCount: string;
+          storeApplication: string;
+          recharge: string;
+          commission: string;
           todo: string;
           message: string;
           downloadCount: string;
@@ -542,6 +545,20 @@ declare namespace App {
           visitCount: string;
           turnover: string;
           dealCount: string;
+          storeCount: string;
+          userCount: string;
+          onlineUsers: string;
+          rechargeAmount: string;
+          betAmount: string;
+          winningAmount: string;
+          newStoresToday: string;
+          newUsersToday: string;
+          rechargeCountToday: string;
+          rechargeAmountToday: string;
+          betCountToday: string;
+          betAmountToday: string;
+          winningCountToday: string;
+          winningAmountToday: string;
           projectNews: {
             title: string;
             moreNews: string;
@@ -556,31 +573,73 @@ declare namespace App {
         userCenter: {
           common: {
             status: {
-              enable: string;
-              disable: string;
+              normal: string;
+              frozen: string;
+              disabled: string;
+              locked: string;
+              inactive: string;
             };
           };
-          userList: {
+          user: {
             title: string;
             userName: string;
-            userGender: string;
             nickName: string;
-            userPhone: string;
-            userEmail: string;
-            userStatus: string;
-            userRole: string;
+            realName: string;
+            gender: string;
+            avatar: string;
+            birthday: string;
+            email: string;
+            mobile: string;
+            emailVerified: string;
+            mobileVerified: string;
+            realNameVerified: string;
+            realNameVerifiedTime: string;
+            status: string;
+            level: string;
+            permissionLevel: string;
+            frozenBalance: string;
+            serviceBalance: string;
+            rechargeBalance: string;
+            commissionBalance: string;
+            frozenCommission: string;
+            withdrawnCommission: string;
+            totalCommission: string;
+            bio: string;
+            location: string;
+            signature: string;
+            loginAttempts: string;
+            lastLoginTime: string;
+            lastLoginIp: string;
+            lastPasswordChange: string;
+            accountLockoutEnd: string;
+            allowMultipleDevices: string;
+            createdTime: string;
+            updatedTime: string;
+            lastActiveTime: string;
+            lastPermissionUpdate: string;
             form: {
               userName: string;
-              userGender: string;
               nickName: string;
-              userPhone: string;
-              userEmail: string;
-              userStatus: string;
-              userRole: string;
+              realName: string;
+              gender: string;
+              avatar: string;
+              email: string;
+              mobile: string;
+              emailVerified: string;
+              mobileVerified: string;
+              realNameVerified: string;
+              realNameVerifiedTime: string;
+              status: string;
+              permissionLevel: string;
+              bio: string;
+              location: string;
+              signature: string;
+              allowMultipleDevices: string;
             };
             addUser: string;
             editUser: string;
-            gender: {
+            genderName: {
+              unknown: string;
               male: string;
               female: string;
             };

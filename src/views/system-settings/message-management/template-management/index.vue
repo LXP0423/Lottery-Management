@@ -5,6 +5,7 @@ import { NButton, NPopconfirm } from 'naive-ui';
 import { fetchGetTemplateList } from '@/service/api/system-settings';
 import { useAppStore } from '@/store/modules/app';
 import { defaultTransform, useNaivePaginatedTable, useTableOperate } from '@/hooks/common/table';
+import { renderValue } from '@/hooks/common/render';
 import { $t } from '@/locales';
 import TemplateOperateDrawer from './modules/template-operate-drawer.vue';
 import TemplateSearch from './modules/template-search.vue';
@@ -14,20 +15,19 @@ const appStore = useAppStore();
 const searchParams: Api.MessageManagement.TemplateSearchParams = reactive({
   current: 1,
   size: 10,
-  status: null,
-  userName: null,
-  userGender: null,
-  nickName: null,
-  userPhone: null,
-  userEmail: null
+  templateCode: null,
+  templateName: null,
+  templateType: null,
+  templateCategory: null,
+  isActive: null
 });
 
 const { columns, columnChecks, data, getData, getDataByPage, loading, mobilePagination } = useNaivePaginatedTable({
   api: () => fetchGetTemplateList(searchParams),
   transform: response => defaultTransform(response),
   onPaginationParamsChange: params => {
-    searchParams.current = params.page;
-    searchParams.size = params.pageSize;
+    searchParams.page = params.page;
+    searchParams.pageSize = params.pageSize;
   },
   columns: () => [
     {
@@ -39,7 +39,7 @@ const { columns, columnChecks, data, getData, getDataByPage, loading, mobilePagi
       key: 'index',
       title: $t('common.index'),
       align: 'center',
-      width: 64,
+      maxWidth: 20,
       render: (_, index) => index + 1
     },
     {
@@ -58,62 +58,60 @@ const { columns, columnChecks, data, getData, getDataByPage, loading, mobilePagi
       key: 'templateType',
       title: $t('page.systemSettings.messageManagement.templateManagement.templateType'),
       align: 'center',
-      width: 120
+      minWidth: 75
     },
     {
       key: 'templateCategory',
       title: $t('page.systemSettings.messageManagement.templateManagement.templateCategory'),
       align: 'center',
-      width: 100
+      minWidth: 75
     },
     {
       key: 'titleTemplate',
       title: $t('page.systemSettings.messageManagement.templateManagement.titleTemplate'),
       align: 'center',
-      width: 100
+      minWidth: 150
     },
     {
       key: 'contentTemplate',
       title: $t('page.systemSettings.messageManagement.templateManagement.contentTemplate'),
       align: 'center',
-      width: 100
-    },
-    {
-      key: 'templateDescription',
-      title: $t('page.systemSettings.messageManagement.templateManagement.templateDescription'),
-      align: 'center',
-      width: 100
+      Width: 150,
+      render: row => renderValue(row.contentTemplate)
     },
     {
       key: 'variablesDescription',
       title: $t('page.systemSettings.messageManagement.templateManagement.variablesDescription'),
       align: 'center',
-      width: 100
+      minWidth: 150,
+      render: row => renderValue(row.variablesDescription)
+    },
+    {
+      key: 'templateDescription',
+      title: $t('page.systemSettings.messageManagement.templateManagement.templateDescription'),
+      align: 'center',
+      minWidth: 150,
+      render: row => renderValue(row.templateDescription)
+    },
+    {
+      key: 'isActive',
+      title: $t('page.systemSettings.messageManagement.templateManagement.isActive'),
+      align: 'center',
+      width: 80,
+      render: row => (row.isActive ? $t('common.yesOrNo.yes') : $t('common.yesOrNo.no'))
     },
     {
       key: 'isSystem',
       title: $t('page.systemSettings.messageManagement.templateManagement.isSystem'),
       align: 'center',
-      width: 100,
+      width: 80,
       render: row => (row.isSystem ? $t('common.yesOrNo.yes') : $t('common.yesOrNo.no'))
     },
     {
       key: 'priority',
       title: $t('page.systemSettings.messageManagement.templateManagement.priority'),
       align: 'center',
-      width: 100
-    },
-    {
-      key: 'triggerEvent',
-      title: $t('page.systemSettings.messageManagement.templateManagement.triggerEvent'),
-      align: 'center',
-      minWidth: 150
-    },
-    {
-      key: 'totalUsed',
-      title: $t('page.systemSettings.messageManagement.templateManagement.totalUsed'),
-      align: 'center',
-      width: 100
+      width: 80
     },
     {
       key: 'operate',
@@ -122,10 +120,10 @@ const { columns, columnChecks, data, getData, getDataByPage, loading, mobilePagi
       width: 130,
       render: row => (
         <div class="flex-center gap-8px">
-          <NButton type="primary" ghost size="small" onClick={() => edit(row.id)}>
+          <NButton type="primary" ghost size="small" onClick={() => edit(row.templateId)}>
             {$t('common.edit')}
           </NButton>
-          <NPopconfirm onPositiveClick={() => handleDelete(row.id)}>
+          <NPopconfirm onPositiveClick={() => handleDelete(row.templateId)}>
             {{
               default: () => $t('common.confirmDelete'),
               trigger: () => (
@@ -151,7 +149,7 @@ const {
   onBatchDeleted,
   onDeleted
   // closeDrawer
-} = useTableOperate(data, 'id', getData);
+} = useTableOperate(data, 'templateId', getData);
 
 async function handleBatchDelete() {
   // request
@@ -160,14 +158,14 @@ async function handleBatchDelete() {
   onBatchDeleted();
 }
 
-function handleDelete(id: number) {
+function handleDelete(id: string) {
   // request
   console.log(id);
 
   onDeleted();
 }
 
-function edit(id: number) {
+function edit(id: string) {
   handleEdit(id);
 }
 </script>
@@ -200,7 +198,7 @@ function edit(id: number) {
         :scroll-x="962"
         :loading="loading"
         remote
-        :row-key="row => row.id"
+        :row-key="row => row.templateId"
         :pagination="mobilePagination"
         class="sm:h-full"
       />

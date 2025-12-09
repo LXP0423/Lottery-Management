@@ -14,7 +14,7 @@ interface Props {
   /** the type of operation */
   operateType: NaiveUI.TableOperateType;
   /** the edit row data */
-  rowData?: Api.SystemUserCenter.UserList | null;
+  rowData?: Api.SystemUserCenter.User | null;
 }
 
 const props = defineProps<Props>();
@@ -34,15 +34,49 @@ const { defaultRequiredRule } = useFormRules();
 
 const title = computed(() => {
   const titles: Record<NaiveUI.TableOperateType, string> = {
-    add: $t('page.userCenter.userList.addUser'),
-    edit: $t('page.userCenter.userList.editUser')
+    add: $t('page.userCenter.user.addUser'),
+    edit: $t('page.userCenter.user.editUser')
   };
   return titles[props.operateType];
 });
 
 type Model = Pick<
-  Api.SystemUserCenter.UserList,
-  'userName' | 'userGender' | 'nickName' | 'userPhone' | 'userEmail' | 'userRoles' | 'status'
+  Api.SystemUserCenter.User,
+  | 'userName'
+  | 'nickName'
+  | 'realName'
+  | 'gender'
+  | 'avatar'
+  | 'birthday'
+  | 'email'
+  | 'mobile'
+  | 'emailVerified'
+  | 'mobileVerified'
+  | 'realNameVerified'
+  | 'realNameVerifiedTime'
+  | 'level'
+  | 'permissionLevel'
+  | 'frozenBalance'
+  | 'serviceBalance'
+  | 'rechargeBalance'
+  | 'commissionBalance'
+  | 'frozenCommission'
+  | 'withdrawnCommission'
+  | 'totalCommission'
+  | 'bio'
+  | 'location'
+  | 'signature'
+  | 'loginAttempts'
+  | 'lastLoginTime'
+  | 'lastLoginIp'
+  | 'lastPasswordChange'
+  | 'accountLockoutEnd'
+  | 'allowMultipleDevices'
+  | 'createdTime'
+  | 'updatedTime'
+  | 'lastActiveTime'
+  | 'lastPermissionUpdate'
+  | 'status'
 >;
 
 const model = ref(createDefaultModel());
@@ -50,11 +84,39 @@ const model = ref(createDefaultModel());
 function createDefaultModel(): Model {
   return {
     userName: '',
-    userGender: null,
     nickName: '',
-    userPhone: '',
-    userEmail: '',
-    userRoles: [],
+    realName: '',
+    gender: null,
+    avatar: '',
+    birthday: '',
+    email: '',
+    mobile: '',
+    emailVerified: '',
+    mobileVerified: '',
+    realNameVerified: '',
+    realNameVerifiedTime: '',
+    level: '',
+    permissionLevel: '',
+    frozenBalance: '',
+    serviceBalance: '',
+    rechargeBalance: '',
+    commissionBalance: '',
+    frozenCommission: '',
+    withdrawnCommission: '',
+    totalCommission: '',
+    bio: '',
+    location: '',
+    signature: '',
+    loginAttempts: '',
+    lastLoginTime: '',
+    lastLoginIp: '',
+    lastPasswordChange: '',
+    accountLockoutEnd: '',
+    allowMultipleDevices: '',
+    createdTime: '',
+    updatedTime: '',
+    lastActiveTime: '',
+    lastPermissionUpdate: '',
     status: null
   };
 }
@@ -123,24 +185,46 @@ watch(visible, () => {
   <NDrawer v-model:show="visible" display-directive="show" :width="360">
     <NDrawerContent :title="title" :native-scrollbar="false" closable>
       <NForm ref="formRef" :model="model" :rules="rules">
-        <NFormItem :label="$t('page.userCenter.userList.userName')" path="userName">
-          <NInput v-model:value="model.userName" :placeholder="$t('page.userCenter.userList.form.userName')" />
+        <NFormItem :label="$t('page.userCenter.user.userName')" path="userName">
+          <NInput v-model:value="model.userName" :placeholder="$t('page.userCenter.user.form.userName')" />
         </NFormItem>
-        <NFormItem :label="$t('page.userCenter.userList.userGender')" path="userGender">
-          <NRadioGroup v-model:value="model.userGender">
+        <NFormItem :label="$t('page.userCenter.user.avatar')" path="avatar">
+          <NInput v-model:value="model.avatar" :placeholder="$t('page.userCenter.user.form.avatar')" />
+        </NFormItem>
+        <NFormItem :label="$t('page.userCenter.user.nickName')" path="nickName">
+          <NInput v-model:value="model.nickName" :placeholder="$t('page.userCenter.user.form.nickName')" />
+        </NFormItem>
+        <NFormItem :label="$t('page.userCenter.user.realName')" path="nirealNameckName">
+          <NInput v-model:value="model.realName" :placeholder="$t('page.userCenter.user.form.realName')" />
+        </NFormItem>
+        <NFormItem :label="$t('page.userCenter.user.gender')" path="gender">
+          <NRadioGroup v-model:value="model.gender">
             <NRadio v-for="item in userGenderOptions" :key="item.value" :value="item.value" :label="$t(item.label)" />
           </NRadioGroup>
         </NFormItem>
-        <NFormItem :label="$t('page.userCenter.userList.nickName')" path="nickName">
-          <NInput v-model:value="model.nickName" :placeholder="$t('page.userCenter.userList.form.nickName')" />
+        <NFormItem :label="$t('page.userCenter.user.birthday')" path="avatar">
+          <!--
+ <ProDate
+            v-model:value="model.birthday"
+            :placeholder="$t('page.userCenter.user.birthday')"
+            style="width: 100%"
+          />
+-->
+          <NDatePicker
+            type="date"
+            :placeholder="$t('page.userCenter.user.birthday')"
+            style="width: 100%"
+            clearable
+            :formatted-value="model.birthday"
+          />
         </NFormItem>
-        <NFormItem :label="$t('page.userCenter.userList.userPhone')" path="userPhone">
-          <NInput v-model:value="model.userPhone" :placeholder="$t('page.userCenter.userList.form.userPhone')" />
+        <NFormItem :label="$t('page.userCenter.user.mobile')" path="mobile">
+          <NInput v-model:value="model.mobile" :placeholder="$t('page.userCenter.user.form.mobile')" />
         </NFormItem>
-        <NFormItem :label="$t('page.userCenter.userList.userEmail')" path="email">
-          <NInput v-model:value="model.userEmail" :placeholder="$t('page.userCenter.userList.form.userEmail')" />
+        <NFormItem :label="$t('page.userCenter.user.email')" path="email">
+          <NInput v-model:value="model.email" :placeholder="$t('page.userCenter.user.form.email')" />
         </NFormItem>
-        <NFormItem :label="$t('page.userCenter.userList.userStatus')" path="status">
+        <NFormItem :label="$t('page.userCenter.user.status')" path="status">
           <NRadioGroup v-model:value="model.status">
             <NRadio v-for="item in enableStatusOptions" :key="item.value" :value="item.value" :label="$t(item.label)" />
           </NRadioGroup>

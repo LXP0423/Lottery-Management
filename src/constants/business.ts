@@ -1,15 +1,19 @@
 import { transformRecordToOption } from '@/utils/common';
 
-export const enableStatusRecord: Record<Api.Common.EnableStatus, App.I18n.I18nKey> = {
-  '1': 'page.userCenter.common.status.enable',
-  '2': 'page.userCenter.common.status.disable'
+export const enableStatusRecord: Record<Api.SystemUserCenter.Status, App.I18n.I18nKey> = {
+  '1': 'page.userCenter.common.status.normal',
+  '2': 'page.userCenter.common.status.frozen',
+  '3': 'page.userCenter.common.status.disabled',
+  '4': 'page.userCenter.common.status.locked',
+  '5': 'page.userCenter.common.status.inactive'
 };
 
 export const enableStatusOptions = transformRecordToOption(enableStatusRecord);
 
-export const userGenderRecord: Record<Api.SystemUserCenter.UserListGender, App.I18n.I18nKey> = {
-  '1': 'page.userCenter.userList.gender.male',
-  '2': 'page.userCenter.userList.gender.female'
+export const userGenderRecord: Record<Api.SystemUserCenter.Gender, App.I18n.I18nKey> = {
+  '0': 'page.userCenter.user.genderName.unknown',
+  '1': 'page.userCenter.user.genderName.male',
+  '2': 'page.userCenter.user.genderName.female'
 };
 
 export const userGenderOptions = transformRecordToOption(userGenderRecord);

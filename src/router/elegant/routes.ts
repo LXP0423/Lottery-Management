@@ -102,7 +102,8 @@ export const generatedRoutes: GeneratedRoute[] = [
             component: 'view.system-settings_message-management_notification-configuration',
             meta: {
               title: 'system-settings_message-management_notification-configuration',
-              i18nKey: 'route.system-settings_message-management_notification-configuration'
+              i18nKey: 'route.system-settings_message-management_notification-configuration',
+              order: 2
             }
           },
           {
@@ -112,6 +113,7 @@ export const generatedRoutes: GeneratedRoute[] = [
             meta: {
               title: 'system-settings_message-management_template-management',
               i18nKey: 'route.system-settings_message-management_template-management',
+              order: 1,
               icon: 'material-symbols:android-messages'
             }
           }

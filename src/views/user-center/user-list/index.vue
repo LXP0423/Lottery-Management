@@ -1,12 +1,12 @@
 <script setup lang="tsx">
 import { reactive } from 'vue';
 import { NButton, NPopconfirm, NTag } from 'naive-ui';
-import { enableStatusRecord, userGenderRecord } from '@/constants/business';
-import { fetchGetUserList } from '@/service/api/system-user-center';
+import { userGenderRecord } from '@/constants/business';
+import { fetchGetUserList } from '@/service/api/user-center';
 import { useAppStore } from '@/store/modules/app';
 import { defaultTransform, useNaivePaginatedTable, useTableOperate } from '@/hooks/common/table';
 import { $t } from '@/locales';
-import UserOperateDrawer from './modules/user-operate-drawer.vue';
+import UserOperateModal from './modules/user-operate-drawer.vue';
 import UserSearch from './modules/user-search.vue';
 
 const appStore = useAppStore();
@@ -26,8 +26,8 @@ const { columns, columnChecks, data, getData, getDataByPage, loading, mobilePagi
   api: () => fetchGetUserList(searchParams),
   transform: response => defaultTransform(response),
   onPaginationParamsChange: params => {
-    searchParams.current = params.page;
-    searchParams.size = params.pageSize;
+    searchParams.page = params.page;
+    searchParams.pageSize = params.pageSize;
   },
   columns: () => [
     {
@@ -39,71 +39,116 @@ const { columns, columnChecks, data, getData, getDataByPage, loading, mobilePagi
       key: 'index',
       title: $t('common.index'),
       align: 'center',
-      width: 64,
+      width: 54,
       render: (_, index) => index + 1
     },
     {
-      key: 'userName',
-      title: $t('page.userCenter.userList.userName'),
+      key: 'avatar',
+      title: $t('page.userCenter.user.avatar'),
       align: 'center',
-      minWidth: 100
+      minWidth: 60,
+      render: (row, index) => {
+        row.avatar = `https://picsum.photos/100/100?random=${index}`; // Mock avatar URL
+        return (
+          <div class="mx-auto size-40px overflow-hidden rd-1/2">
+            <img src={row.avatar} alt="avatar" class="size-full object-cover" />
+          </div>
+        );
+      }
+    },
+    {
+      key: 'userName',
+      title: $t('page.userCenter.user.userName'),
+      align: 'center',
+      minWidth: 120
     },
     {
       key: 'userGender',
-      title: $t('page.userCenter.userList.userGender'),
+      title: $t('page.userCenter.user.gender'),
       align: 'center',
-      width: 100,
+      minWidth: 50,
       render: row => {
-        if (row.userGender === null) {
+        if (row.gender === null) {
           return null;
         }
-
-        const tagMap: Record<Api.SystemUserCenter.UserListGender, NaiveUI.ThemeColor> = {
-          1: 'primary',
+        const tagMap: Record<Api.SystemUserCenter.Gender, NaiveUI.ThemeColor> = {
+          0: 'info',
+          1: 'success',
           2: 'error'
         };
-
-        const label = $t(userGenderRecord[row.userGender]);
-
-        return <NTag type={tagMap[row.userGender]}>{label}</NTag>;
+        const label = $t(userGenderRecord[row.gender]);
+        return <NTag type={tagMap[row.gender]}>{label}</NTag>;
       }
     },
     {
       key: 'nickName',
-      title: $t('page.userCenter.userList.nickName'),
+      title: $t('page.userCenter.user.nickName'),
+      align: 'center',
+      minWidth: 120
+    },
+    {
+      key: 'realName',
+      title: $t('page.userCenter.user.realName'),
       align: 'center',
       minWidth: 100
     },
     {
-      key: 'userPhone',
-      title: $t('page.userCenter.userList.userPhone'),
+      key: 'mobile',
+      title: $t('page.userCenter.user.mobile'),
       align: 'center',
       width: 120
     },
     {
-      key: 'userEmail',
-      title: $t('page.userCenter.userList.userEmail'),
+      key: 'email',
+      title: $t('page.userCenter.user.email'),
       align: 'center',
-      minWidth: 200
+      width: 130
+    },
+    {
+      key: 'serviceBalance',
+      title: $t('page.userCenter.user.serviceBalance'),
+      align: 'center',
+      minWidth: 100
+    },
+    {
+      key: 'frozenBalance',
+      title: $t('page.userCenter.user.frozenBalance'),
+      align: 'center',
+      minWidth: 100
+    },
+    // {
+    //   key: 'commissionBalance',
+    //   title: $t('page.userCenter.user.commissionBalance'),
+    //   align: 'center',
+    //   minWidth: 120
+    // },
+    // {
+    //   key: 'frozenCommission',
+    //   title: $t('page.userCenter.user.frozenCommission'),
+    //   align: 'center',
+    //   minWidth: 120
+    // },
+    {
+      key: 'PermissionLevel',
+      title: $t('page.userCenter.user.permissionLevel'),
+      align: 'center',
+      minWidth: 60,
+      render: () => (
+        <NTag type="warning" size="medium">
+          未知
+        </NTag>
+      )
     },
     {
       key: 'status',
-      title: $t('page.userCenter.userList.userStatus'),
+      title: $t('page.userCenter.user.status'),
       align: 'center',
-      width: 100,
+      minWidth: 80,
       render: row => {
         if (row.status === null) {
           return null;
         }
-
-        const tagMap: Record<Api.Common.EnableStatus, NaiveUI.ThemeColor> = {
-          1: 'success',
-          2: 'warning'
-        };
-
-        const label = $t(enableStatusRecord[row.status]);
-
-        return <NTag type={tagMap[row.status]}>{label}</NTag>;
+        return <StatusTag status={Number(row.status)} size="medium" />;
       }
     },
     {
@@ -113,7 +158,7 @@ const { columns, columnChecks, data, getData, getDataByPage, loading, mobilePagi
       width: 130,
       render: row => (
         <div class="flex-center gap-8px">
-          <NButton type="primary" ghost size="small" onClick={() => edit(row.id)}>
+          <NButton type="primary" class="status-normal" ghost size="small" onClick={() => edit(row.id)}>
             {$t('common.edit')}
           </NButton>
           <NPopconfirm onPositiveClick={() => handleDelete(row.id)}>
@@ -163,7 +208,7 @@ function edit(id: number) {
   <div class="min-h-500px flex-col-stretch gap-16px overflow-hidden lt-sm:overflow-auto">
     <UserSearch v-model:model="searchParams" @search="getDataByPage" />
     <NCard
-      :title="$t('page.userCenter.userList.title')"
+      :title="$t('page.userCenter.user.title')"
       :bordered="false"
       size="small"
       class="card-wrapper sm:flex-1-hidden"
@@ -191,7 +236,7 @@ function edit(id: number) {
         :pagination="mobilePagination"
         class="sm:h-full"
       />
-      <UserOperateDrawer
+      <UserOperateModal
         v-model:visible="drawerVisible"
         :operate-type="operateType"
         :row-data="editingData"

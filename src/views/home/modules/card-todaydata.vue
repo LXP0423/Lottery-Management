@@ -5,10 +5,10 @@ import { useThemeStore } from '@/store/modules/theme';
 import { $t } from '@/locales';
 
 defineOptions({
-  name: 'CardData'
+  name: 'CardToDayData'
 });
 
-interface CardData {
+interface CardToDayData {
   key: string;
   title: string;
   value: number;
@@ -20,12 +20,12 @@ interface CardData {
   icon: string;
 }
 
-// Mock data: 店铺数量,用户数量,访问量,在线人数,充值金额,投注金额，中奖金额
-const cardData = computed<CardData[]>(() => [
+// Mock data: 今日新增店铺、今日新增用户、今日充值次数、今日充值金额、今日投注方案数、今日投注金额、今日中奖方案数、今日中奖金额
+const cardData = computed<CardToDayData[]>(() => [
   {
-    key: 'storeCount',
-    title: $t('page.home.storeCount'),
-    value: 15,
+    key: 'newStoresToday',
+    title: $t('page.home.newStoresToday'),
+    value: 1,
     unit: '',
     color: {
       start: '#9d50bb',
@@ -34,9 +34,9 @@ const cardData = computed<CardData[]>(() => [
     icon: 'clarity:store-solid'
   },
   {
-    key: 'userCount',
-    title: $t('page.home.userCount'),
-    value: 356,
+    key: 'newUsersToday',
+    title: $t('page.home.newUsersToday'),
+    value: 3,
     unit: '',
     color: {
       start: '#56cdf3',
@@ -45,9 +45,9 @@ const cardData = computed<CardData[]>(() => [
     icon: 'mdi:account-group-outline'
   },
   {
-    key: 'rechargeAmount',
-    title: $t('page.home.rechargeAmount'),
-    value: 2622,
+    key: 'rechargeCountToday',
+    title: $t('page.home.rechargeCountToday'),
+    value: 2,
     unit: '',
     color: {
       start: '#fcbc25',
@@ -56,9 +56,20 @@ const cardData = computed<CardData[]>(() => [
     icon: 'hugeicons:money-bag-02'
   },
   {
-    key: 'betAmount',
-    title: $t('page.home.betAmount'),
-    value: 95276,
+    key: 'rechargeAmountToday',
+    title: $t('page.home.rechargeAmountToday'),
+    value: 60,
+    unit: '',
+    color: {
+      start: '#fcbc25',
+      end: '#f68057'
+    },
+    icon: 'hugeicons:money-bag-02'
+  },
+  {
+    key: 'betCountToday',
+    title: $t('page.home.betCountToday'),
+    value: 1556,
     unit: '',
     color: {
       start: '#ff8177',
@@ -67,9 +78,20 @@ const cardData = computed<CardData[]>(() => [
     icon: 'fluent:money-16-regular'
   },
   {
-    key: 'winningAmount',
-    title: $t('page.home.winningAmount'),
-    value: 29527,
+    key: 'betAmountToday',
+    title: $t('page.home.betAmountToday'),
+    value: 26580,
+    unit: '',
+    color: {
+      start: '#ff8177',
+      end: '#ff867a'
+    },
+    icon: 'fluent:money-16-regular'
+  },
+  {
+    key: 'winningCountToday',
+    title: $t('page.home.winningCountToday'),
+    value: 68,
     unit: '',
     color: {
       start: '#e91e63',
@@ -78,26 +100,15 @@ const cardData = computed<CardData[]>(() => [
     icon: 'material-symbols:rewarded-ads-outline'
   },
   {
-    key: 'visitCount',
-    title: $t('page.home.visitCount'),
-    value: 15203,
+    key: 'winningAmountToday',
+    title: $t('page.home.winningAmountToday'),
+    value: 3568,
     unit: '',
     color: {
-      start: '#ec4786',
-      end: '#b955a4'
+      start: '#e91e63',
+      end: '#c2185b'
     },
-    icon: 'ant-design:bar-chart-outlined'
-  },
-  {
-    key: 'onlineUsers',
-    title: $t('page.home.onlineUsers'),
-    value: 26,
-    unit: '',
-    color: {
-      start: '#00dbde',
-      end: '#fc00ff'
-    },
-    icon: 'mdi:account-arrow-up-outline'
+    icon: 'material-symbols:rewarded-ads-outline'
   }
 ]);
 
@@ -109,7 +120,7 @@ const [DefineGradientBg, GradientBg] = createReusableTemplate<GradientBgProps>()
 
 const themeStore = useThemeStore();
 
-function getGradientColor(color: CardData['color']) {
+function getGradientColor(color: CardToDayData['color']) {
   return `linear-gradient(to bottom right, ${color.start}, ${color.end})`;
 }
 </script>

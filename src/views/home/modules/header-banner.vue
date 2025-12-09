@@ -19,21 +19,22 @@ interface StatisticData {
   value: string;
 }
 
+// Mock data: 店铺申请,充值,佣金（暂未开发）,消息
 const statisticData = computed<StatisticData[]>(() => [
   {
     id: 0,
-    label: $t('page.home.projectCount'),
-    value: '25'
+    label: $t('page.home.storeApplication'),
+    value: '3'
   },
   {
     id: 1,
-    label: $t('page.home.todo'),
-    value: '4/16'
+    label: $t('page.home.recharge'),
+    value: '16'
   },
   {
     id: 2,
     label: $t('page.home.message'),
-    value: '12'
+    value: '8'
   }
 ]);
 </script>
@@ -56,7 +57,12 @@ const statisticData = computed<StatisticData[]>(() => [
       </NGi>
       <NGi span="24 s:24 m:6">
         <NSpace :size="24" justify="end">
-          <NStatistic v-for="item in statisticData" :key="item.id" class="whitespace-nowrap" v-bind="item" />
+          <NStatistic
+            v-for="item in statisticData"
+            :key="item.id"
+            class="whitespace-nowrap text-center"
+            v-bind="item"
+          />
         </NSpace>
       </NGi>
     </NGrid>

@@ -235,13 +235,13 @@ export function defaultTransform<ApiData>(
   const { data, error } = response;
 
   if (!error) {
-    const { records, current, size, total } = data;
+    const { items, page, pageSize, totalCount } = data;
 
     return {
-      data: records,
-      pageNum: current,
-      pageSize: size,
-      total
+      data: items,
+      pageNum: page,
+      pageSize,
+      total: totalCount
     };
   }
 

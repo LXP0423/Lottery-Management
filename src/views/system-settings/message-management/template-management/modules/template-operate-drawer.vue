@@ -7,7 +7,7 @@ import { useFormRules, useNaiveForm } from '@/hooks/common/form';
 import { $t } from '@/locales';
 
 defineOptions({
-  name: 'TemplateOperateDrawer'
+  name: 'TemplateOperateModal'
 });
 
 interface Props {
@@ -34,8 +34,8 @@ const { defaultRequiredRule } = useFormRules();
 
 const title = computed(() => {
   const titles: Record<NaiveUI.TableOperateType, string> = {
-    add: $t('page.userCenter.userList.addUser'),
-    edit: $t('page.userCenter.userList.editUser')
+    add: $t('page.systemSettings.messageManagement.templateManagement.addTemplate'),
+    edit: $t('page.systemSettings.messageManagement.templateManagement.editTemplate')
   };
   return titles[props.operateType];
 });
@@ -66,24 +66,24 @@ const model = ref(createDefaultModel());
 
 function createDefaultModel(): Model {
   return {
-    templateCode: '模板代码',
-    templateName: '模板名称',
-    templateType: '模板类型',
-    templateCategory: '模板分类',
-    titleTemplate: '标题模板',
-    contentTemplate: '内容模板',
-    templateDescription: '模板说明',
-    variablesDescription: '变量说明',
-    isActive: '是否启用',
-    isSystem: '是否系统模板',
-    priority: '优先级',
-    triggerEvent: '触发事件',
-    totalUsed: '总使用次数',
-    lastUsedTime: '最后使用时间',
-    createTime: '创建时间',
-    updateTime: '更新时间',
-    createdBy: '创建人',
-    updatedBy: '更新人'
+    templateCode: '',
+    templateName: '',
+    templateType: '',
+    templateCategory: '',
+    titleTemplate: '',
+    contentTemplate: '',
+    templateDescription: '',
+    variablesDescription: '',
+    isActive: '',
+    isSystem: '',
+    priority: '',
+    triggerEvent: '',
+    totalUsed: '',
+    lastUsedTime: '',
+    createTime: '',
+    updateTime: '',
+    createdBy: '',
+    updatedBy: ''
   };
 }
 
@@ -148,155 +148,165 @@ watch(visible, () => {
 </script>
 
 <template>
-  <NDrawer v-model:show="visible" display-directive="show" :width="360">
-    <NDrawerContent :title="title" :native-scrollbar="false" closable>
-      <NForm ref="formRef" :model="model" :rules="rules">
-        <NFormItem
-          :label="$t('page.systemSettings.messageManagement.templateManagement.templateCode')"
-          path="templateCode"
-        >
-          <NInput
-            v-model:value="model.templateCode"
-            :placeholder="$t('page.systemSettings.messageManagement.templateManagement.form.templateCode')"
-          />
-        </NFormItem>
-        <NFormItem
-          :label="$t('page.systemSettings.messageManagement.templateManagement.templateName')"
-          path="templateName"
-        >
-          <NInput
-            v-model:value="model.templateName"
-            :placeholder="$t('page.systemSettings.messageManagement.templateManagement.form.templateName')"
-          />
-        </NFormItem>
-        <NFormItem
-          :label="$t('page.systemSettings.messageManagement.templateManagement.templateType')"
-          path="templateType"
-        >
-          <NInput
-            v-model:value="model.templateType"
-            :placeholder="$t('page.systemSettings.messageManagement.templateManagement.form.templateType')"
-          />
-        </NFormItem>
-        <NFormItem
-          :label="$t('page.systemSettings.messageManagement.templateManagement.templateCategory')"
-          path="templateCategory"
-        >
-          <NInput
-            v-model:value="model.templateCategory"
-            :placeholder="$t('page.systemSettings.messageManagement.templateManagement.form.templateCategory')"
-          />
-        </NFormItem>
-        <NFormItem
-          :label="$t('page.systemSettings.messageManagement.templateManagement.titleTemplate')"
-          path="titleTemplate"
-        >
-          <NInput
-            v-model:value="model.titleTemplate"
-            :placeholder="$t('page.systemSettings.messageManagement.templateManagement.form.titleTemplate')"
-          />
-        </NFormItem>
-        <NFormItem
-          :label="$t('page.systemSettings.messageManagement.templateManagement.contentTemplate')"
-          path="contentTemplate"
-        >
-          <NInput
-            v-model:value="model.contentTemplate"
-            :placeholder="$t('page.systemSettings.messageManagement.templateManagement.form.contentTemplate')"
-          />
-        </NFormItem>
-        <NFormItem
-          :label="$t('page.systemSettings.messageManagement.templateManagement.templateDescription')"
-          path="templateDescription"
-        >
-          <NInput
-            v-model:value="model.templateDescription"
-            :placeholder="$t('page.systemSettings.messageManagement.templateManagement.form.templateDescription')"
-          />
-        </NFormItem>
-        <NFormItem
-          :label="$t('page.systemSettings.messageManagement.templateManagement.variablesDescription')"
-          path="variablesDescription"
-        >
-          <NInput
-            v-model:value="model.variablesDescription"
-            :placeholder="$t('page.systemSettings.messageManagement.templateManagement.form.variablesDescription')"
-          />
-        </NFormItem>
-        <NFormItem :label="$t('page.systemSettings.messageManagement.templateManagement.isActive')" path="isActive">
-          <NInput
-            v-model:value="model.isActive"
-            :placeholder="$t('page.systemSettings.messageManagement.templateManagement.form.isActive')"
-          />
-        </NFormItem>
-        <NFormItem :label="$t('page.systemSettings.messageManagement.templateManagement.isSystem')" path="isSystem">
-          <NInput
-            v-model:value="model.isSystem"
-            :placeholder="$t('page.systemSettings.messageManagement.templateManagement.form.isSystem')"
-          />
-        </NFormItem>
-        <NFormItem :label="$t('page.systemSettings.messageManagement.templateManagement.priority')" path="priority">
-          <NInput
-            v-model:value="model.priority"
-            :placeholder="$t('page.systemSettings.messageManagement.templateManagement.form.priority')"
-          />
-        </NFormItem>
-        <NFormItem
-          :label="$t('page.systemSettings.messageManagement.templateManagement.triggerEvent')"
-          path="triggerEvent"
-        >
-          <NInput
-            v-model:value="model.triggerEvent"
-            :placeholder="$t('page.systemSettings.messageManagement.templateManagement.form.triggerEvent')"
-          />
-        </NFormItem>
-        <NFormItem :label="$t('page.systemSettings.messageManagement.templateManagement.totalUsed')" path="totalUsed">
-          <NInput
-            v-model:value="model.totalUsed"
-            :placeholder="$t('page.systemSettings.messageManagement.templateManagement.form.totalUsed')"
-          />
-        </NFormItem>
-        <NFormItem
-          :label="$t('page.systemSettings.messageManagement.templateManagement.lastUsedTime')"
-          path="lastUsedTime"
-        >
-          <NInput
-            v-model:value="model.lastUsedTime"
-            :placeholder="$t('page.systemSettings.messageManagement.templateManagement.form.lastUsedTime')"
-          />
-        </NFormItem>
-        <NFormItem :label="$t('page.systemSettings.messageManagement.templateManagement.createTime')" path="createTime">
-          <NInput
-            v-model:value="model.createTime"
-            :placeholder="$t('page.systemSettings.messageManagement.templateManagement.form.createTime')"
-          />
-        </NFormItem>
-        <NFormItem :label="$t('page.systemSettings.messageManagement.templateManagement.updateTime')" path="updateTime">
-          <NInput
-            v-model:value="model.updateTime"
-            :placeholder="$t('page.systemSettings.messageManagement.templateManagement.form.updateTime')"
-          />
-        </NFormItem>
-        <NFormItem :label="$t('page.systemSettings.messageManagement.templateManagement.createdBy')" path="createdBy">
-          <NInput
-            v-model:value="model.createdBy"
-            :placeholder="$t('page.systemSettings.messageManagement.templateManagement.form.createdBy')"
-          />
-        </NFormItem>
-        <NFormItem :label="$t('page.systemSettings.messageManagement.templateManagement.updatedBy')" path="updatedBy">
-          <NInput
-            v-model:value="model.updatedBy"
-            :placeholder="$t('page.systemSettings.messageManagement.templateManagement.form.updatedBy')"
-          />
-        </NFormItem>
-        <!--
+  <NModal
+    v-model:show="visible"
+    preset="card"
+    :style="{ width: '800px', maxWidth: '90vw' }"
+    :title="title"
+    :bordered="false"
+    size="medium"
+    :segmented="{
+      content: 'soft',
+      action: 'soft'
+    }"
+  >
+    <NForm ref="formRef" :model="model" :rules="rules">
+      <NFormItem
+        :label="$t('page.systemSettings.messageManagement.templateManagement.templateCode')"
+        path="templateCode"
+      >
+        <NInput
+          v-model:value="model.templateCode"
+          :placeholder="$t('page.systemSettings.messageManagement.templateManagement.form.templateCode')"
+        />
+      </NFormItem>
+      <NFormItem
+        :label="$t('page.systemSettings.messageManagement.templateManagement.templateName')"
+        path="templateName"
+      >
+        <NInput
+          v-model:value="model.templateName"
+          :placeholder="$t('page.systemSettings.messageManagement.templateManagement.form.templateName')"
+        />
+      </NFormItem>
+      <NFormItem
+        :label="$t('page.systemSettings.messageManagement.templateManagement.templateType')"
+        path="templateType"
+      >
+        <NInput
+          v-model:value="model.templateType"
+          :placeholder="$t('page.systemSettings.messageManagement.templateManagement.form.templateType')"
+        />
+      </NFormItem>
+      <NFormItem
+        :label="$t('page.systemSettings.messageManagement.templateManagement.templateCategory')"
+        path="templateCategory"
+      >
+        <NInput
+          v-model:value="model.templateCategory"
+          :placeholder="$t('page.systemSettings.messageManagement.templateManagement.form.templateCategory')"
+        />
+      </NFormItem>
+      <NFormItem
+        :label="$t('page.systemSettings.messageManagement.templateManagement.titleTemplate')"
+        path="titleTemplate"
+      >
+        <NInput
+          v-model:value="model.titleTemplate"
+          :placeholder="$t('page.systemSettings.messageManagement.templateManagement.form.titleTemplate')"
+        />
+      </NFormItem>
+      <NFormItem
+        :label="$t('page.systemSettings.messageManagement.templateManagement.contentTemplate')"
+        path="contentTemplate"
+      >
+        <NInput
+          v-model:value="model.contentTemplate"
+          :placeholder="$t('page.systemSettings.messageManagement.templateManagement.form.contentTemplate')"
+        />
+      </NFormItem>
+      <NFormItem
+        :label="$t('page.systemSettings.messageManagement.templateManagement.templateDescription')"
+        path="templateDescription"
+      >
+        <NInput
+          v-model:value="model.templateDescription"
+          :placeholder="$t('page.systemSettings.messageManagement.templateManagement.form.templateDescription')"
+        />
+      </NFormItem>
+      <NFormItem
+        :label="$t('page.systemSettings.messageManagement.templateManagement.variablesDescription')"
+        path="variablesDescription"
+      >
+        <NInput
+          v-model:value="model.variablesDescription"
+          :placeholder="$t('page.systemSettings.messageManagement.templateManagement.form.variablesDescription')"
+        />
+      </NFormItem>
+      <NFormItem :label="$t('page.systemSettings.messageManagement.templateManagement.isActive')" path="isActive">
+        <NInput
+          v-model:value="model.isActive"
+          :placeholder="$t('page.systemSettings.messageManagement.templateManagement.form.isActive')"
+        />
+      </NFormItem>
+      <NFormItem :label="$t('page.systemSettings.messageManagement.templateManagement.isSystem')" path="isSystem">
+        <NInput
+          v-model:value="model.isSystem"
+          :placeholder="$t('page.systemSettings.messageManagement.templateManagement.form.isSystem')"
+        />
+      </NFormItem>
+      <NFormItem :label="$t('page.systemSettings.messageManagement.templateManagement.priority')" path="priority">
+        <NInput
+          v-model:value="model.priority"
+          :placeholder="$t('page.systemSettings.messageManagement.templateManagement.form.priority')"
+        />
+      </NFormItem>
+      <NFormItem
+        :label="$t('page.systemSettings.messageManagement.templateManagement.triggerEvent')"
+        path="triggerEvent"
+      >
+        <NInput
+          v-model:value="model.triggerEvent"
+          :placeholder="$t('page.systemSettings.messageManagement.templateManagement.form.triggerEvent')"
+        />
+      </NFormItem>
+      <NFormItem :label="$t('page.systemSettings.messageManagement.templateManagement.totalUsed')" path="totalUsed">
+        <NInput
+          v-model:value="model.totalUsed"
+          :placeholder="$t('page.systemSettings.messageManagement.templateManagement.form.totalUsed')"
+        />
+      </NFormItem>
+      <NFormItem
+        :label="$t('page.systemSettings.messageManagement.templateManagement.lastUsedTime')"
+        path="lastUsedTime"
+      >
+        <NInput
+          v-model:value="model.lastUsedTime"
+          :placeholder="$t('page.systemSettings.messageManagement.templateManagement.form.lastUsedTime')"
+        />
+      </NFormItem>
+      <NFormItem :label="$t('page.systemSettings.messageManagement.templateManagement.createTime')" path="createTime">
+        <NInput
+          v-model:value="model.createTime"
+          :placeholder="$t('page.systemSettings.messageManagement.templateManagement.form.createTime')"
+        />
+      </NFormItem>
+      <NFormItem :label="$t('page.systemSettings.messageManagement.templateManagement.updateTime')" path="updateTime">
+        <NInput
+          v-model:value="model.updateTime"
+          :placeholder="$t('page.systemSettings.messageManagement.templateManagement.form.updateTime')"
+        />
+      </NFormItem>
+      <NFormItem :label="$t('page.systemSettings.messageManagement.templateManagement.createdBy')" path="createdBy">
+        <NInput
+          v-model:value="model.createdBy"
+          :placeholder="$t('page.systemSettings.messageManagement.templateManagement.form.createdBy')"
+        />
+      </NFormItem>
+      <NFormItem :label="$t('page.systemSettings.messageManagement.templateManagement.updatedBy')" path="updatedBy">
+        <NInput
+          v-model:value="model.updatedBy"
+          :placeholder="$t('page.systemSettings.messageManagement.templateManagement.form.updatedBy')"
+        />
+      </NFormItem>
+      <!--
  <NFormItem :label="$t('page.userCenter.userList.userStatus')" path="status">
           <NRadioGroup v-model:value="model.status">
             <NRadio v-for="item in enableStatusOptions" :key="item.value" :value="item.value" :label="$t(item.label)" />
           </NRadioGroup>
         </NFormItem>
 -->
-        <!--
+      <!--
  <NFormItem :label="$t('page.userCenter.userList.userRole')" path="roles">
           <NSelect
             v-model:value="model.userRoles"
@@ -306,15 +316,14 @@ watch(visible, () => {
           />
         </NFormItem>
 -->
-      </NForm>
-      <template #footer>
-        <NSpace :size="16">
-          <NButton @click="closeDrawer">{{ $t('common.cancel') }}</NButton>
-          <NButton type="primary" @click="handleSubmit">{{ $t('common.confirm') }}</NButton>
-        </NSpace>
-      </template>
-    </NDrawerContent>
-  </NDrawer>
+    </NForm>
+    <template #action>
+      <NSpace :size="16">
+        <NButton @click="closeDrawer">{{ $t('common.cancel') }}</NButton>
+        <NButton type="primary" @click="handleSubmit">{{ $t('common.confirm') }}</NButton>
+      </NSpace>
+    </template>
+  </NModal>
 </template>
 
 <style scoped></style>

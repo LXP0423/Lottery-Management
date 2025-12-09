@@ -16,5 +16,11 @@ declare namespace Api {
       roles: string[];
       buttons: string[];
     }
+
+    interface TemplateItem {
+      templateId: string;
+      templateName: string;
+      buttons: string[];
+    }
   }
 }

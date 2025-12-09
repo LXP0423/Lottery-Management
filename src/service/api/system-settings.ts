@@ -24,7 +24,7 @@ import { request } from '../request';
 /** get user list */
 export function fetchGetTemplateList(params?: Api.MessageManagement.TemplateSearchParams) {
   return request<Api.MessageManagement.templateList>({
-    url: '/users/GetUsersPaged',
+    url: '/Messages/templates',
     method: 'get',
     params
   });

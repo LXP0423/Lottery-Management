@@ -23,7 +23,7 @@ import { request } from '../request';
 
 /** get user list */
 export function fetchGetUserList(params?: Api.SystemUserCenter.UserSearchParams) {
-  return request<Api.SystemUserCenter.UserLists>({
+  return request<Api.SystemUserCenter.UserList>({
     url: '/users/GetUsersPaged',
     method: 'get',
     params

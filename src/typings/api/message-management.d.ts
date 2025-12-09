@@ -5,10 +5,12 @@ declare namespace Api {
    * backend api module: "systemUserCenter"
    */
   namespace MessageManagement {
-    type CommonSearchParams = Pick<Common.PaginatingCommonParams, 'current' | 'size'>;
+    type CommonSearchParams = Pick<Common.PaginatingCommonParams, 'page' | 'pageSize'>;
 
     /** 模板 */
     type templateManagement = Common.CommonRecord<{
+      /** 模板ID */
+      templateId: string;
       /** 模板代码 */
       templateCode: string;
       /** 模板名称 */

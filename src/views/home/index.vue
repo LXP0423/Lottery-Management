@@ -3,6 +3,7 @@ import { computed } from 'vue';
 import { useAppStore } from '@/store/modules/app';
 import HeaderBanner from './modules/header-banner.vue';
 import CardData from './modules/card-data.vue';
+import CardToDayData from './modules/card-todaydata.vue';
 import LineChart from './modules/line-chart.vue';
 import PieChart from './modules/pie-chart.vue';
 import ProjectNews from './modules/project-news.vue';
@@ -15,12 +16,8 @@ const gap = computed(() => (appStore.isMobile ? 0 : 16));
 
 <template>
   <NSpace vertical :size="16">
-    <!--
- <NAlert :title="$t('common.warning')" type="warning">
-      {{ $t('page.home.branchDesc') }}
-    </NAlert>
--->
     <HeaderBanner />
+    <CardToDayData />
     <CardData />
     <NGrid :x-gap="gap" :y-gap="16" responsive="screen" item-responsive>
       <NGi span="24 s:24 m:14">
